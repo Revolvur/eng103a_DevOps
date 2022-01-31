@@ -6,7 +6,18 @@
 
 **Four pillars of DevOps best practice**
 - Ease of Use
-- Flexibility (product owner can add changes)
+
+*-* troubleshoot release / configuration issues and communicate their discoveries back to the dev team for resolutions that could not be implemented by the DevOps team themselves.
+
+*-* Reaching into each others' toolboxes and using the tools of the others.
+
+*-* Infrastructure that is described by code can thus be tracked, validated, and reconfigured in an automated way.
+
+*-* Pipeline to keep track of everything
+
+
+- Flexibility 
+- (product owner can add changes)
 - Robustness - faster delivery of product
 - Cost - cost effective (automating process)
 
