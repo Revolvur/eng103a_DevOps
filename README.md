@@ -36,8 +36,8 @@ Microservices are the opposite of a monolith. You have small services that can b
 - To check version, type `Vagrant --version` in your terminal.
 
 ### 3. Install Virtualbox
- - Install <code>[Virtualbox version 6.1] https://www.virtualbox.org/wiki/Downloads</code>
-  
+ - Install <code>[Virtualbox version 6.1] (https://www.virtualbox.org/wiki/Downloads)</code> 
+
   
 > For windows users: 
 > 1. In File Explorer, navigate to `C:\Program Files\Oracle\VirtualBox\drivers\vboxdrv`
