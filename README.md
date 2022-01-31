@@ -1,4 +1,3 @@
-> install markdown extensions `All in one`
 
 # What is DevOps
 ## Why DevOps
@@ -16,8 +15,7 @@
 *-* Pipeline to keep track of everything
 
 
-- Flexibility 
-- (product owner can add changes)
+- Flexibility (product owner can add changes)
 - Robustness - faster delivery of product
 - Cost - cost effective (automating process)
 
