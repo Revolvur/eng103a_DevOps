@@ -12,5 +12,4 @@
 
 ### Monolith, 2 tier & Microservices Architectures
 
-Monolith - what you created for the API, if that specific program goes down, your process goes down.
-Front end and back end. 
+In a monolithic application, everything is so integrated together, you have to rebuild everything anytime you make a change.
