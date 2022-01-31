@@ -1,0 +1,4 @@
+- Run Git Bash as admin
+- cd "file directory where vagrantfile is"
+- You may see some warnings which is normal and you can ignore them for now
+- check vagrant status
