@@ -25,6 +25,8 @@ In a monolithic application, everything is so integrated together, you have to r
 
 Microservices are the opposite of a monolith. You have small services that can be deployed individually. Each service has a focus on one aspect of the business functionality. The services are loosely coupled. That means, that the services work relatively independent of each other and only communicate with the other services, if necessary.
 
+![Virtualisation with Vagrant](https://user-images.githubusercontent.com/98178943/152055679-0f873c34-a949-49d9-93fb-a108c4d53615.png)
+
 ## Installation and setup guide for Vagrant, Virtual box and Ruby
 ------------------------
 ### 1. Install ruby
@@ -142,4 +144,43 @@ PM2: A production process manager for Node. js applications that has a built-in 
 
 ## Near conclusion
 - on the local host use `rake spec` to see if all dependencies are installed and `0` failures
-- 
+- on the virtual machine enter the directory of `app$`
+- Run `npm install` (which downloads a package and its dependencies and  then `npm start`
+- Check `http://192.168.10.100:3000/` and `http://192.168.10.100` to ensure the program is running.
+
+## Automation
+
+The process from `vagrant up --provision` to running `npm install` can be automated by entering the code below into `provision.sh`
+
+```
+#!/bin/bash
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install nginx -y
+sudo apt-get install nodejs -y
+sudo apt-get install python-software-properties
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install nodejs -y
+sudo npm install pm2 -g
+```
+
+The code below is from the Vagrantfile to execute the `provision.sh` and also to copy all the files such as the environment and app folders into the target VM directory.
+
+```
+Vagrant.configure("2") do |config|
+
+
+config.vm.box = "ubuntu/xenial64"
+
+#creating private network with ip
+config.vm.network "private_network", ip: "192.168.10.100"
+# Synced app folder   localhost path, path for vm
+config.vm.synced_folder ".", "/home/vagrant/app"
+# Setting up path for synced folder vm, C+p files from our machine to theirs
+# . means all the files from my current location
+# Provisioning
+config.vm.provision "shell", path: "source/provision.sh"
+# shell = set up(?), run this file
+# provision it, using this method, using this file
+end
+```
