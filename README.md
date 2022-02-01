@@ -36,7 +36,7 @@ Microservices are the opposite of a monolith. You have small services that can b
 - To check version, type `Vagrant --version` in your terminal.
 
 ### 3. Install Virtualbox
- - Install <code>[Virtualbox version 6.1] (https://www.virtualbox.org/wiki/Downloads)</code> 
+- Install <code>[Virtualbox version 6.1] (https://www.virtualbox.org/wiki/Downloads)</code> 
 
   
 > For windows users: 
@@ -83,3 +83,63 @@ end
 - `sudo apt-get install <package>` install package
 - `systemctl status <app>` status of specified app
 - `exit`
+
+
+# Linux basics
+- Who am I? Type `uname` to find the name of the machine.
+- Enter `uname -a` for more detailed information.
+- Where am I? Enter `pwd` for home path
+- List directories/files, enter `ls`
+- List all including hidden folders and files, enter `ls -a`
+- To make a directory `mkdir <dir-name>`
+- Navigate to directory `cd <dir-name>` (cd \first-letter\ + tab button)
+- To create a file, enter `touch <file-name>`
+  or `nano <file-name>`
+- To display content of the file, enter `cat <file-name>`
+- To remove a file, enter `rm -rf <file-name>`
+- To copy a file, enter `cp <file-destination-name>`
+- To move a file, enter `mv <file-name> <dir-name>` 
+- To check running processes, enter `top`
+
+#### Permissions
+- READ Write Executable read only
+- To checkp permissions, enter `ll`
+- To change permissions, enter `chmod <permission-name>`, `sudo chmod +x <file-name>`
+
+### Bash scripting
+- To create script, enter in terminal `nano <file-name>.sh`
+- Enter commands you want to automate underneath
+- `#!/bin/bash` in .sh file
+- Enter `cat <file>` to view commands inside it
+- To run script, enter `sudo ./<file-name>`
+
+### Envi Testing
+Before deploying software from developers, we have to make sure that we have all the dependencies in place in order to be able to run anything. In our example in my repo, we want to run app.js but we need to install dependencies.
+
+## Local Host
+
+- First, on the local host, open a sudo(?) terminal.
+- Navigate to the environment folder using `cd` and check using `ls`
+- `ls` and if there are files: 
+- ```
+  Gemfile Gemfile.lock Rakefile
+  ```
+  enter `gem install bundler` which is to  setup everything for the application containing the Gemfile.
+- enter `bundle` to install Ruby dependencies
+- enter `rake spec` which is Ruby's method to test for dependencies
+- Any failures after `rake spec` will need to be fixed by installing dependencies
+
+## On the virtual machine
+- `vagrant ssh` to enter vm
+- `sudo apt-get install nodejs -y` to install nodejs, `nodejs -v` to check version. If version is incorrect (v4 but we needed v6.x) do..
+- `sudo apt-get install python-software-properties` for the module
+- `curl -sl https://deb.nodesource.com/setup_6.x | sudo -E bash -` to install nodejs v6.x
+- to install the correct version of nodejs `sudo apt-get install nodejs -y`
+- `sudo npm install pm2 -g` to install pm2. 
+```
+PM2: A production process manager for Node. js applications that has a built-in load balancer. PM2 enables you to keep applications alive forever, reloads them without downtime, helps you to manage application logging, monitoring, and clustering.  
+```
+
+## Near conclusion
+- on the local host use `rake spec` to see if all dependencies are installed and `0` failures
+- 
