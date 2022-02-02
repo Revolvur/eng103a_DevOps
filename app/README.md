@@ -11,6 +11,7 @@ The app is a node app with three pages.
 ### Homepage
 
 ``localhost:3000``
+192.168.10.100:3000
 
 Displays a simple homepage displaying a Sparta logo and message. This page should return a 200 response.
 
@@ -25,6 +26,7 @@ This page and the seeding is only accessible when a database is available and th
 ### A fibonacci number generator
 
 ``localhost:3000/fibonacci/{index}``
+192.168.10.100/fibonacci/5
 
 This page has be implemented poorly on purpose to produce a slow running function. This can be used for performance testing and crash recovery testing.
 
@@ -42,6 +44,7 @@ There is a commented route that opens a serious security vulnerability. This sho
 Clone the app
 
 ```
+# package manager
 npm install
 npm start
 ```

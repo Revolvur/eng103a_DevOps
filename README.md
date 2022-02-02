@@ -27,6 +27,17 @@ Microservices are the opposite of a monolith. You have small services that can b
 
 ![Virtualisation with Vagrant](https://user-images.githubusercontent.com/98178943/152055679-0f873c34-a949-49d9-93fb-a108c4d53615.png)
 
+On this diagram, we are going to be constructing a VM/VMs on our LocalHost based on Linux. We will already have Vagrant installed, Oracle VM Virtual Box, Ruby, Bash, Git and SSH.
+
+Definitions:
+-	Vagrant is an open-source software used for building and managing virtual machine environments.
+-	SSH provides an encrypted communication channel between two machines: client and server.
+-	Git tracks changes in files.
+-	Bash is a command line tool used to manipulate files and directories.
+
+Using Vagrant allows the user to automate almost all if not all the steps to configure a virtual machine with the app and environment given from the developer(s). 
+
+
 ## Installation and setup guide for Vagrant, Virtual box and Ruby
 ------------------------
 ### 1. Install ruby
@@ -38,7 +49,7 @@ Microservices are the opposite of a monolith. You have small services that can b
 - To check version, type `Vagrant --version` in your terminal.
 
 ### 3. Install Virtualbox
-- Install <code>[Virtualbox version 6.1] (https://www.virtualbox.org/wiki/Downloads)</code> 
+- Install <code>[Virtualbox version 6.1](https://www.virtualbox.org/wiki/Downloads)</code> 
 
   
 > For windows users: 
@@ -133,7 +144,9 @@ Before deploying software from developers, we have to make sure that we have all
 
 ## On the virtual machine
 - `vagrant ssh` to enter vm
-- `sudo apt-get install nodejs -y` to install nodejs, `nodejs -v` to check version. If version is incorrect (v4 but we needed v6.x) do..
+- `sudo apt-get install nodejs -y` to install nodejs, `nodejs -v` to check version. 
+If version is incorrect (v4 but we needed v6.x) do..
+
 - `sudo apt-get install python-software-properties` for the module
 - `curl -sl https://deb.nodesource.com/setup_6.x | sudo -E bash -` to install nodejs v6.x
 - to install the correct version of nodejs `sudo apt-get install nodejs -y`
@@ -142,7 +155,7 @@ Before deploying software from developers, we have to make sure that we have all
 PM2: A production process manager for Node. js applications that has a built-in load balancer. PM2 enables you to keep applications alive forever, reloads them without downtime, helps you to manage application logging, monitoring, and clustering.  
 ```
 
-## Near conclusion
+## Near conclusion of set up
 - on the local host use `rake spec` to see if all dependencies are installed and `0` failures
 - on the virtual machine enter the directory of `app$`
 - Run `npm install` (which downloads a package and its dependencies and  then `npm start`
@@ -150,8 +163,9 @@ PM2: A production process manager for Node. js applications that has a built-in 
 
 ## Automation
 
-The process from `vagrant up --provision` to running `npm install` can be automated by entering the code below into `provision.sh`
+The process from `vagrant up` to running `npm install` can be automated by entering the code below into `provision.sh`
 
+NOTE: You do not need to enter `vagrant up --provision` if you are creating a new VM.
 ```
 #!/bin/bash
 sudo apt-get update -y
@@ -182,5 +196,110 @@ config.vm.synced_folder ".", "/home/vagrant/app"
 config.vm.provision "shell", path: "source/provision.sh"
 # shell = set up(?), run this file
 # provision it, using this method, using this file
+end
+```
+
+### Linux variables
+- Create Linux Var `FIRST_NAME=SHAHRUKH`
+- How to check the var `echo $FIRST_NAME`
+
+### Environment Variables
+- How to check a variable, enter `env var`
+- Enter the command `printenv key` to print a specific variable or `env` to list all variables.
+- To create an env var enter `export`
+- e.g. `export LAST_NAME=JENKINS`
+- To delete env var, use the command: `unset VAR_NAME`
+ 
+
+How to kill a process in Linux:
+- Enter `top` and then `sudo kill <process>`
+
+`grep` is used used to search for a string of characters in a specified file.
+- An example of `grep` would be `env | grep HOME`
+
+How to make an env var persistent so it doesn't disappear everytime we exit the vm?
+- `ls -a` to look for your `.bashrc` file in your directory
+- `sudo nano` into it and enter `export <VAR_NAME>=<VALUE>`
+- Save and exit and enter `source ~/.bashrc` to save  the file without having to restart the VM.
+
+-DB CONNECTION PRE-REQUISITE
+```
+// connect to database
+if(process.env.DB_HOST) {
+  mongoose.connect(process.env.DB_HOST);
+
+  app.get("/posts" , function(req,res){
+      Post.find({} , function(err, posts){
+        if(err) return res.send(err);
+        res.render("posts/index" , {posts:posts});
+      })
+  });
+}
+```
+As DevOps we need to learn how to understand code and not necessarily write it.
+
+## Reverse Proxy
+Why do we reverse proxy? Similar to a forward proxy, where the user's ip is 'anonymised' so the origin server cannot see their actual proxy, a reverse proxy will act as a front for the origin server for anonymity and to enhance security.  In this instance, we want to stop the port 3000 on the url `http://192.168.10.100` from showing so we need to reverse proxy to hide it. If people are able to access open ports it may lead to malicious and unauthorised access to sensitive data.
+
+The steps to reverse port 3000 are as detailed below:
+- First, we need to set up the nginx configuration in the `/etc/nginx/sites-available/default` file
+- We can open the code in the vm by `$ sudo nano /etc/nginx/sites-available/default`
+or `$ sudo nano default`
+or `sudo rm -rf default` to erase everything in the default file and then `nano` in
+- Once in the code:
+```
+. . .
+    location / {
+        proxy_pass http://localhost:<PORT/URL YOU WANT TO REVERSE PROXY>;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+
+## Break down of the code above:
+- `proxy_pass` - Passes on the request for the port to proxy URL
+- `proxy_http_version` - sets http protocol version. v1.0 is by default
+- `proxy_set_header` - Allows redefining or appending fields to the request header passed to the proxied server. The value can contain text, variables, and their combinations.
+- `proxy_cache_bypass` - e.g. get requests, caching can interfere so bypassing will ensure it is getting the correct data for the correct thing.
+
+
+---------------------------------
+To make sure you have entered everything correctly in ~/default. 
+- Exit `nano` and enter `sudo nginx -t` in the vm terminal.
+- Restart nginx and apply changes by entering `sudo systemctl restart nginx`
+
+Proceed with `npm install` (installing dependencies) and `npm start`
+The website should be able to be accessed without specifying the port.
+
+
+## Running two virtual machines
+To run more than one virtual machine, we had to modify our Vagrantfile. 
+
+```
+Vagrant.configure("2") do |config|
+	config.vm.define "app" do |app|
+		app.vm.box = "ubuntu/xenial64"
+
+		#creating private network with ip
+		app.vm.network "private_network", ip: "192.168.10.100"
+		# Synced app folder   localhost path, path for vm
+		app.vm.synced_folder ".", "/home/vagrant/app"
+		app.vm.synced_folder "environment", "/home/vagrant/environment"
+		# Setting up path for synced folder vm, C+p files from our machine to theirs
+		# . means all the files from my current location
+		# Provisioning
+		app.vm.provision "shell", path: "source/provision.sh"
+	end
+	# shell = set up(?), run this file
+	# provision it, using this method, using this file
+	config.vm.define "db" do |db|
+		db.vm.box = "ubuntu/xenial64"
+		db.vm.network "private_network", ip: "192.168.10.150"
+	end
 end
 ```
