@@ -1,3 +1,32 @@
+- [What is DevOps](#what-is-devops)
+  * [Why DevOps](#why-devops)
+    + [Benefits of DevOps](#benefits-of-devops)
+    + [Monolith, 2 tier & Microservices Architectures](#monolith--2-tier---microservices-architectures)
+  * [Installation and setup guide for Vagrant, Virtual box and Ruby](#installation-and-setup-guide-for-vagrant--virtual-box-and-ruby)
+    + [1. Install ruby](#1-install-ruby)
+    + [2. Install vagrant](#2-install-vagrant)
+    + [3. Install Virtualbox](#3-install-virtualbox)
+    + [4. Installing Vagrant](#4-installing-vagrant)
+    + [5. Launching Vagrant](#5-launching-vagrant)
+- [Running your VM](#running-your-vm)
+  * [Ubuntu and installing/updating packges in VM](#ubuntu-and-installing-updating-packges-in-vm)
+- [Linux basics](#linux-basics)
+      - [Permissions](#permissions)
+    + [Bash scripting](#bash-scripting)
+    + [Envi Testing](#envi-testing)
+  * [Local Host](#local-host)
+  * [On the virtual machine](#on-the-virtual-machine)
+  * [Near conclusion of set up](#near-conclusion-of-set-up)
+  * [Automation](#automation)
+    + [Linux variables](#linux-variables)
+    + [Environment Variables](#environment-variables)
+  * [Reverse Proxy](#reverse-proxy)
+  * [Break down of the code above:](#break-down-of-the-code-above-)
+  * [Running two virtual machines](#running-two-virtual-machines)
+  * [DB CONNECTION PRE-REQUISITE](#db-connection-pre-requisite)
+
+
+
 
 # What is DevOps
 ## Why DevOps
