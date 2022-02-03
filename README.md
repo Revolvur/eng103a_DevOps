@@ -224,20 +224,6 @@ How to make an env var persistent so it doesn't disappear everytime we exit the 
 - `sudo nano` into it and enter `export <VAR_NAME>=<VALUE>`
 - Save and exit and enter `source ~/.bashrc` to save  the file without having to restart the VM.
 
--DB CONNECTION PRE-REQUISITE
-```
-// connect to database
-if(process.env.DB_HOST) {
-  mongoose.connect(process.env.DB_HOST);
-
-  app.get("/posts" , function(req,res){
-      Post.find({} , function(err, posts){
-        if(err) return res.send(err);
-        res.render("posts/index" , {posts:posts});
-      })
-  });
-}
-```
 
 ## Reverse Proxy
 Why do we reverse proxy? Similar to a forward proxy, where the user's ip is 'anonymised' so the origin server cannot see their actual proxy, a reverse proxy will act as a front for the origin server for anonymity and to enhance security.  In this instance, we want to stop the port 3000 on the url `http://192.168.10.100` from showing so we need to reverse proxy to hide it. If people are able to access open ports it may lead to malicious and unauthorised access to sensitive data.
@@ -304,3 +290,23 @@ Vagrant.configure("2") do |config|
 	end
 end
 ```
+
+## DB CONNECTION PRE-REQUISITE
+-------------------------------------
+
+![db_host](https://user-images.githubusercontent.com/98178943/152259368-169642f3-ccbc-44d7-975a-5b6526e15d9d.PNG)
+```
+// connect to database
+if(process.env.DB_HOST) {
+  mongoose.connect(process.env.DB_HOST);
+
+  app.get("/posts" , function(req,res){
+      Post.find({} , function(err, posts){
+        if(err) return res.send(err);
+        res.render("posts/index" , {posts:posts});
+      })
+  });
+}
+```
+
+We have a database, that we need to configure and set up on a separate vm, and that vm will also have ubuntu 16.04 as that is the environment that we have tested. Once we have that vm, we should be able to communicate from our vm, off the front end app to the db. The new vm will have mongodb (the database). It will have nodejs and nginx installed already. Looking at the documentation from the dev, how are they connecting the app with the db? By using DB_HOST env var. Once db vm created, the app needs to have the DB_HOST to fetch the data from db and to display it on post/index.
