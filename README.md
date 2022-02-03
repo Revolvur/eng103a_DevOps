@@ -19,6 +19,8 @@ Pipeline to keep track of everything
 - Robustness - faster delivery of product
 - Cost - cost effective (automating process)
 
+As DevOps engineers we need to learn how to understand code and not necessarily write it.
+
 ### Monolith, 2 tier & Microservices Architectures
 
 In a monolithic application, everything is so integrated together, you have to rebuild everything anytime you make a change.
@@ -236,7 +238,6 @@ if(process.env.DB_HOST) {
   });
 }
 ```
-As DevOps we need to learn how to understand code and not necessarily write it.
 
 ## Reverse Proxy
 Why do we reverse proxy? Similar to a forward proxy, where the user's ip is 'anonymised' so the origin server cannot see their actual proxy, a reverse proxy will act as a front for the origin server for anonymity and to enhance security.  In this instance, we want to stop the port 3000 on the url `http://192.168.10.100` from showing so we need to reverse proxy to hide it. If people are able to access open ports it may lead to malicious and unauthorised access to sensitive data.
