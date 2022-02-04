@@ -34,6 +34,10 @@
 - [Pushing what we've done in Vagrant to AWS](#pushing-what-we-ve-done-in-vagrant-to-aws)
   * [Back to the terminal!](#back-to-the-terminal-)
   * [Enabling access to your Public IP](#enabling-access-to-your-public-ip)
+  * [Enabling port 3000](#enabling-port-3000)
+  * [Creating a second instance for MongoDB](#creating-a-second-instance-for-mongodb)
+  * [2 tier architecture complete for the app and db!](#2-tier-architecture-complete-for-the-app-and-db-)
+
 
 
 
@@ -62,6 +66,8 @@ As DevOps engineers we need to learn how to understand code and not necessarily 
 ### Monolith, 2 tier & Microservices Architectures
 
 In a monolithic application, everything is so integrated together, you have to rebuild everything anytime you make a change.
+
+2 tier architecture divides the client and database into two. The presentation layer will run on the client and data is stored in the database. The client is on the first tier and the database is on the second tier. Users will have to communicate with the client to access data from the database. 
 
 Microservices are the opposite of a monolith. You have small services that can be deployed individually. Each service has a focus on one aspect of the business functionality. The services are loosely coupled. That means, that the services work relatively independent of each other and only communicate with the other services, if necessary.
 
@@ -257,7 +263,7 @@ How to kill a process in Linux:
 `grep` is used used to search for a string of characters in a specified file.
 - An example of `grep` would be `env | grep HOME`
 
-How to make an env var persistent so it doesn't disappear everytime we exit the VM?
+How to make an env var persistent so it doesn't disappear every time we exit the VM?
 - `ls -a` to look for your `.bashrc` file in your directory
 - `sudo nano` into it and enter `export <VAR_NAME>=<VALUE>`
 - Save and exit and enter `source ~/.bashrc` to save  the file without having to restart the VM.
@@ -493,6 +499,8 @@ sudo systemctl enable mongod
 - Accessibility
 - APIs
 
+![2 tier architecture with AWS](https://user-images.githubusercontent.com/98178943/152561817-d0a62b3d-7f58-4c98-ae6f-ab3550e85045.png)
+
 # Pushing what we've done in Vagrant to AWS
 Our region is Europe - Ireland for the EC2 VMs which we are going to use.
 The steps to launch an instance are:
@@ -516,7 +524,7 @@ The steps to launch an instance are:
 - Enter `sudo apt update -y`
 - `sudo apt upgrade -y`
 - `sudo apt install nginx -y`
-- To sync files to our EC2 VM, we can enter `scp -i "~/.ssh/eng103a.pem" -r <FOLDER_NAME> ubuntu@ec2-<YOUR_IP>.<YOUR_LOCATION>-1.compute.amazonaws.com:~` 
+- To sync files to our EC2 VM, we can enter `scp -i "~/.ssh/eng103a.pem" -r app ubuntu@ec2-54-171-115-252.eu-west-1.compute.amazonaws.com:~` 
 
 ## Enabling access to your Public IP
 -------------------
@@ -526,7 +534,31 @@ The steps to launch an instance are:
  - Your nginx site should be available for everyone to see!
 
 
+## Enabling port 3000
+-------------------------------------
+- Return to EC2 instances
+- On the `security` tab, enter the link under `Security Groups`
+- Add new inbound rules > add rule > Type: Custom TCP > Port range: 3000 > Source: Custom > Description: welcome page > save rules.
 
+## Creating a second instance for MongoDB
+------------------
+Follow the same steps as [Pushing what we've done in Vagrant to AWS](#Pushing-what-we've-done-in-Vagrant-to-AWS) except add `_db` to all the names.
+- Also, during the configuration of security groups add an extra rule: Type: "Custom TCP Rules" > Port Range: "27017" > Source: "Anywhere" > Description: "allow from app only".
 
+Load into the terminal and `~/.ssh` into the db VM. e.g. `$ ssh -i "eng103a.pem" ubuntu@ec2-<YOUR_IP>.<YOUR_LOCATION>-1.compute.amazonaws.com`
+- Set up mongodb by either loading your `provision_db.sh` file or entering the commands manually.
+- Once you're done, `sudo systemctl status mongod` to check if everything has been configured correctly.
+
+## 2 tier architecture complete for the app and db!
+--------------------------
+Return to the app vm and make sure to enter the correct ip address of the db VM into `DB_HOSTS`:
+```
+sudo nano .bashrc
+
+export DB_HOST=mongodb://xx.xx.xx.xxx:27017/posts
+
+source .bashrc
+```
+`npm install`, `node seeds/seed.js` and `npm start` to correctly configure and load `xx.xx.xx.xxx:3000/posts` on your browser!
 
 
