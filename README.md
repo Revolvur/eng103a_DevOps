@@ -111,9 +111,9 @@ Using Vagrant allows the user to automate almost all if not all the steps to con
 - `cd` the folder you're running the VM from
 - Enter `nano Vagrantfile` and add the code:
 ```
-  Vagrant.configure("2") do |config|
+Vagrant.configure("2") do |config|
 
- config VM.box = "ubuntu/xenial64"
+ config.vm.box = "ubuntu/xenial64"
 # creating a virtual machine ubuntu
 
 
