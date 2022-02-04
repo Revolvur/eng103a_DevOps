@@ -1,24 +1,22 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure("2") do |config|
+	config.vm.define "app" do |app|
+		app.vm.box = "ubuntu/xenial64"
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/xenial64"
-
-#creating private network with ip
-config.vm.network "private_network", ip: "192.168.10.100"
-# Synced app folder   localhost path, path for vm
-config.vm.synced_folder ".", "/home/vagrant/app"
-# Setting up path for synced folder vm, C+p files from our machine to theirs
-# . means all the files from my current location
-# Provisioning
-config.vm.provision "shell", path: "source/provision.sh"
-# shell = set up(?), run this file
-# provision it, using this method, using this file
+		#creating private network with ip
+		app.vm.network "private_network", ip: "192.168.10.100"
+		# Synced app folder   localhost path, path for vm
+		app.vm.synced_folder ".", "/home/vagrant/app"
+		app.vm.synced_folder "environment", "/home/vagrant/environment"
+		# Setting up path for synced folder vm, C+p files from our machine to theirs
+		# . means all the files from my current location
+		# Provisioning
+		app.vm.provision "shell", path: "source/provision.sh", privileged: false
+	end
+	# shell = set up(?), run this file
+	# provision it, using this method, using this file
+	config.vm.define "db" do |db|
+		db.vm.box = "ubuntu/xenial64"
+		db.vm.network "private_network", ip: "192.168.10.150"
+		db.vm.provision "shell", path: "source/provision_db.sh", privileged: false
+	end
 end
