@@ -8,8 +8,8 @@
     + [3. Install Virtualbox](#3-install-virtualbox)
     + [4. Installing Vagrant](#4-installing-vagrant)
     + [5. Launching Vagrant](#5-launching-vagrant)
-- [Running your VM](#running-your VM)
-  * [Ubuntu and installing/updating packges in VM](#ubuntu-and-installing-updating-packges-in VM)
+- [Running your VM](#running-your-vm)
+  * [Ubuntu and installing/updating packges in VM](#ubuntu-and-installing-updating-packges-in-vm)
 - [Linux basics](#linux-basics)
       - [Permissions](#permissions)
     + [Bash scripting](#bash-scripting)
@@ -24,7 +24,16 @@
   * [Break down of the code above:](#break-down-of-the-code-above-)
   * [Running two virtual machines](#running-two-virtual-machines)
   * [DB CONNECTION PRE-REQUISITE](#db-connection-pre-requisite)
-
+  * [Mongodb](#mongodb)
+  * [Connection between app and db VMs](#connection-between-app-and-db-vms)
+  * [Automating provisioning of MongoDB, app and reverse proxy](#automating-provisioning-of-mongodb--app-and-reverse-proxy)
+    + [provision.sh for VM app](#provisionsh-for-vm-app)
+      - [Automating the reverse proxy for Nginx](#automating-the-reverse-proxy-for-nginx)
+    + [provision_db.sh for VM db](#provision-dbsh-for-vm-db)
+- [Amazon Web Services (AWS)](#amazon-web-services--aws-)
+- [Pushing what we've done in Vagrant to AWS](#pushing-what-we-ve-done-in-vagrant-to-aws)
+  * [Back to the terminal!](#back-to-the-terminal-)
+  * [Enabling access to your Public IP](#enabling-access-to-your-public-ip)
 
 
 
