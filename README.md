@@ -580,3 +580,14 @@ An AMI is a way to launch a VM in the cloud via AWS. You are able to launch seve
 - Select AMI and select `Create instance from image`
 - Follow the steps when creating a regular instance but add existing security groups from the original instance and add `_from_<instance_name>` to each name and tag.
 - Launch instance.
+
+# Monitoring with CloudWatch
+![m with cloudwatch](https://user-images.githubusercontent.com/98178943/152861092-209b4c78-aacd-4fe8-abaf-d2fc7860b7ae.png)
+
+We can set alarms on AWS to warn or inform us of any errors or bottlenecks. To set this:
+- Select your instance in the EC2 and click the monitoring tab.
+- Click `manage detailed monitoring` and enable the function (Warning: will cost extra!).
+- Click `add to dashboard` under `Manage detailed monitoring` and new CloudWatch window will open
+- Select create alarm and follow the steps using the [official AWS guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ConsoleAlarms.html).
+- In this case we want to send an email/SNS when the CPU utilisation goes above 25% so we choose CPU_UTILIZATION under our instance id.
+- We can test this by going into our ubuntu VM, and adding the lines `sudo apt install stress` and once that is done enter `stress -v --cpu 2`. This handy tool will stress test the linux system.
