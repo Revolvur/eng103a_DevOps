@@ -37,8 +37,9 @@
   * [Enabling port 3000](#enabling-port-3000)
   * [Creating a second instance for MongoDB](#creating-a-second-instance-for-mongodb)
   * [2 tier architecture complete for the app and db!](#2-tier-architecture-complete-for-the-app-and-db-)
-
-
+- [Amazon Machine Image (AMI)](#amazon-machine-image--ami-)
+    + [Creating an AMI](#creating-an-ami)
+    + [Launching instance from AMI](#launching-instance-from-ami)
 
 
 # What is DevOps
