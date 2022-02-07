@@ -265,7 +265,7 @@ How to kill a process in Linux:
 
 How to make an env var persistent so it doesn't disappear every time we exit the VM?
 - `ls -a` to look for your `.bashrc` file in your directory
-- `sudo nano` into it and enter `export <VAR_NAME>=<VALUE>`
+- `nano` into it and enter `export <VAR_NAME>=<VALUE>`
 - Save and exit and enter `source ~/.bashrc` to save  the file without having to restart the VM.
 
 
@@ -552,13 +552,13 @@ Load into the terminal and `~/.ssh` into the db VM. e.g. `$ ssh -i "eng103a.pem"
 ```
 chmod +x changes permissions of the file to make it executable.
 ```
-- Once you're done, `sudo systemctl status mongod` to check if everything has been configured correctly and that .
+- Once you're done, `sudo systemctl status mongod` to check if everything has been configured correctly and that it has been enabled.
 
 ## 2 tier architecture complete for the app and db!
 --------------------------
 Return to the app vm and make sure to enter the correct ip address of the db VM into `DB_HOSTS`:
 ```
-sudo nano .bashrc
+nano .bashrc
 
 export DB_HOST=mongodb://xx.xx.xx.xxx:27017/posts
 
@@ -566,4 +566,16 @@ source .bashrc
 ```
 `npm install`, `node seeds/seed.js` and `npm start` to correctly configure and load `xx.xx.xx.xxx:3000/posts` on your browser!
 
+# Amazon Machine Image (AMI)
+An AMI is a way to launch a VM in the cloud via AWS. You are able to launch several instances at a time from the same AMI.
 
+### Creating an AMI
+-------------------------
+- To create an AMI from your running instance, you have to select the instance on your EC2 dashboard and go to Actions > Image and templates and click `create image`
+- Enter image name as `<name_ami>` > create image.
+
+### Launching instance from AMI
+- Close your current instance which as an AMI
+- Select AMI and select `Create instance from image`
+- Follow the steps when creating a regular instance but add existing security groups from the original instance and add `_from_<instance_name>` to each name and tag.
+- Launch instance.
