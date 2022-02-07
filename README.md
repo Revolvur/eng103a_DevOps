@@ -500,6 +500,7 @@ sudo systemctl enable mongod
 - APIs
 
 ![2 tier architecture with AWS](https://user-images.githubusercontent.com/98178943/152561817-d0a62b3d-7f58-4c98-ae6f-ab3550e85045.png)
+(Source: Made by myself using Adobe Express)
 
 # Pushing what we've done in Vagrant to AWS
 Our region is Europe - Ireland for the EC2 VMs which we are going to use.
@@ -547,7 +548,7 @@ Follow the same steps as [Pushing what we've done in Vagrant to AWS](#Pushing-wh
 
 Load into the terminal and `~/.ssh` into the db VM. e.g. `$ ssh -i "eng103a.pem" ubuntu@ec2-<YOUR_IP>.<YOUR_LOCATION>-1.compute.amazonaws.com`
 - Set up mongodb by either loading your `provision_db.sh` file or entering the commands manually.
-- If you want to load in your `provision_db.sh` script you can change the permissions by entering `sudo chmod +x provision.sh` and then enter `sudo ./provision_db.sh`
+- If you want to load in your `provision_db.sh` script you can change the permissions by entering `sudo chmod +x provision_db.sh` and then enter `sudo ./provision_db.sh`
 ```
 chmod +x changes permissions of the file to make it executable.
 ```
