@@ -61,7 +61,8 @@ make bucket - `aws mb s3://[name]`
 remove bucket - `aws s3 rb s3://[name]`
 remove files - `aws s3 rm s3://[name]/[file-name]
 ```
-### We can automate this using python boto3
+### We can code these commands this using python boto3
+--------------------
 - Enter `pip3 install boto3`
 - Create a python file `sudo nano file_name.py`
 
@@ -90,3 +91,51 @@ s3.Object('eng103a-name-devops', 'test.txt').delete()
 client = boto3.client('s3', region_name='eu-west-1')
 bucket_name = 'eng103a-name-devops'
 client.delete_bucket(Bucket=bucket_name)
+
+```
+
+To fully automate the process and make it responsive to user input we can implement a while loop:
+
+```
+#!/usr/bin/env python3
+import boto3
+
+location = {'LocationConstraint': "eu-west-1"}
+s3 = boto3.resource('s3')
+
+bucket_name = input("Enter the bucket name, please ensure there are no underscore (e.g. hello_world):\n")
+
+while True:
+    user_input = input("Type mb to make a bucket, rb to remove/delete a bucket, df to delete a file, upload to upload "
+                       "a file, dl to download a file or enter exit to abort script:\n")
+
+    if user_input == "mb":
+        s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration=location)
+    elif user_input == "rb":
+        s3.Bucket(bucket_name).delete()
+    elif user_input == "df":
+        file_name = input("Please enter file name:\n")
+        s3.Object(bucket_name, file_name).delete()
+    elif user_input == "upload":
+        file_name = input("What is the name of the file that you would like to upload?\n")
+        upload_user_input = input("Do you want to change destination name? Type yes or no:\n")
+        if upload_user_input in ('y', 'Y', 'Yes', 'yes', 'ye', 'yy'):
+            destination_file_name = input("What is the destination file name?\n")
+            s3.Bucket(bucket_name).upload_file(file_name, destination_file_name)
+        else:
+            s3.Bucket(bucket_name).upload_file(file_name, file_name)
+    elif user_input == "dl":
+        file_name = input("Enter the name of the file you want to download:\n")
+        upload_user_input = input("Do you want to change destination name? Type yes or no:\n")
+        if upload_user_input in ('y', 'Y', 'Yes', 'yes', 'ye', 'yy'):
+            destination_file_name = input("What is the destination file name?\n")
+            s3.Bucket(bucket_name).download_file(file_name, destination_file_name)
+        else:
+            s3.Bucket(bucket_name).download_file(file_name, file_name)
+    elif user_input == "exit":
+        print("Goodbye!")
+        break
+    else:
+        print("Please enter one of the options:", "\n")
+
+```
