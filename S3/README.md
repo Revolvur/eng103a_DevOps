@@ -9,3 +9,4 @@ S3 uses Buckets for storage. These buckets exist in different AWS regions, such 
 
 S3 can be used for disaster recovery. With S3 we can use CRUD, which stands for the actions: Create bucket/object, read, update and delete.
 
+The diagram above shows the steps throughout disaster recovery. If throughout any point an instance fails, objects stored can be accessed from other Buckets.
