@@ -14,16 +14,24 @@ S3 can be used for disaster recovery. With S3 we can use CRUD, which stands for 
 ![dr](https://user-images.githubusercontent.com/98178943/152986900-5684a71b-9f22-4cf1-9b33-47e8334a476b.png)
 The diagram above shows the steps throughout disaster recovery. If throughout any point an instance fails, objects stored can be accessed from other Buckets.
 
-From the diagram, from the localhost to AWS EC2:
+**From the diagram, from the localhost to AWS EC2:**
 - We need the .pem to be able to access our EC2
 
-From the AWS EC2 to our AWS S3:
+**From the AWS EC2 to our AWS S3:**
 - We need AWSCLI and its dependencies
 - We also need AWS Access and Security keys
 
-AWS S3 has various storage classes:
+**AWS S3 has various storage classes:**
 - Standard - Access data at anytime (higher cost)
 - Glacial - For infrequent data access (cheaper the longer you keep the data retrieval on)
+
+**CRUD: Create/Read/Update/Delete:**
+- A CRUD application performs all these functions
+- An example would be online banking:
+```
+- New accounts can be made, status of existing accounts balances can be checked.
+- You can make transactions and update your info etc.
+```
 
 To access S3 and to effectively back up and recover objects we need to have access to our AWS ACCESS KEY and SECRET KEY.
 
