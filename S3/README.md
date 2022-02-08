@@ -23,7 +23,7 @@ The diagram above shows the steps throughout disaster recovery. If throughout an
 
 **AWS S3 has various storage classes:**
 - Standard - Access data at anytime (higher cost)
-- Glacial - For infrequent data access (cheaper the longer you keep the data retrieval on)
+- Glacial - For infrequent data access (cheaper), ideal for long term storage and can only be accessed from time to time.
 
 **CRUD: Create/Read/Update/Delete:**
 - A CRUD application performs all these functions
@@ -51,4 +51,42 @@ AWS Secret Access Key [None]:
 Default region name [None]: eu-west-1
 Default output format [None]: json
 ```
-- Enter `aws s3 ls` to check that you have the directories.
+- Enter `aws s3 ls` to check that you have the correct buckets available.
+
+## Applying CRUD to Buckets
+-------------------
+Commands list: on terminal:
+```
+make bucket - `aws mb s3://[name]`
+remove bucket - `aws s3 rb s3://[name]`
+remove files - `aws s3 rm s3://[name]/[file-name]
+```
+### We can automate this using python boto3
+- Enter `pip3 install boto3`
+- Create a python file `sudo nano file_name.py`
+
+```
+#!/usr/bin/env python3
+
+import boto3
+bucket_name = "eng103a-yacob-boto3"
+location = {'LocationConstraint': "eu-west-1"}
+
+# creates bucket
+s3 = boto3.resource('s3')
+s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration=location)
+
+# downloads file
+s3 = boto3.client('s3')
+s3.download_file('eng103a-name-devops', 'file.txt')
+
+# delete object in bucket
+
+s3 = boto3.resource('s3')
+s3.Object('eng103a-name-devops', 'test.txt').delete()
+
+# delete object
+
+client = boto3.client('s3', region_name='eu-west-1')
+bucket_name = 'eng103a-name-devops'
+client.delete_bucket(Bucket=bucket_name)
