@@ -94,7 +94,7 @@ client.delete_bucket(Bucket=bucket_name)
 
 ```
 
-To fully automate the process and make it responsive to user input we can implement a while loop:
+To fully automate the process and make it responsive to user input we can implement a while loop with if statement blocks:
 
 ```
 #!/usr/bin/env python3
@@ -139,3 +139,11 @@ while True:
         print("Please enter one of the options:", "\n")
 
 ```
+
+# Auto scaling group and Load Balancing
+
+![Autoscale diagram](https://user-images.githubusercontent.com/98178943/153212600-fe481259-68e0-411d-a1f9-1172c4caa6cf.png)
+
+Auto scaling - Automatically adjusts the amount of computational resources based on the server load.
+
+Load balancing - Distributes the traffic between EC2 instances so that no one instance gets overwhelmed
