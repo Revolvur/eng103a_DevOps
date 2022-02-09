@@ -147,3 +147,41 @@ while True:
 Auto scaling - Automatically adjusts the amount of computational resources based on the server load.
 
 Load balancing - Distributes the traffic between EC2 instances so that no one instance gets overwhelmed
+
+**To create an auto scaling group there are several steps we need to follow:**
+
+## Creating a Launch Template
+- Make sure you have an up to date AMI with which you want to use otherwise you'll have to create a new application
+
+The steps are:
+- Select `Launch Templates` under `Instances` in the left tab
+- Select `Create Launch Template` 
+- Fill in `Launch template name and description` with appropriate names
+- Under `Application and OS Images (Amazon machine Image)`, select your AMI or create new ubuntu machine.
+- `Instance type` is t2.micro, depending on your needs
+- `Key pair (login)` select your existing pair
+- `Network settings` select or create a security group, with the correct VPC
+- Leave configure storage unless it needs changing
+- Under `Resource tags` enter the key and value fields as appropriate and then under `Resource types` select Instances, Volumes and Network interfaces.
+- Under `Advanced details`, select `Enable resource-based IPV4 (A record) DNS requests`. Under `User data` enter the commands for the instance you want to run. In this case:
+```
+#!/bin/bash
+sudo apt update -y && sudo apt upgrade -y
+sudo su ubuntu
+source /home/ubuntu/.bashrc
+cd /home/ubuntu/sync/app && screen -d -m npm start
+```
+
+## Creating an Auto Scaling Group
+------------------
+- Head to `Auto Scaling Groups`, enter an appropriate name and select the launch template you'd like to use.
+- Under `Network` select the correct VPC and what AZ you'd like to use.
+- Under `load balancer` select the appropriate load balancer type, select the appropriate name and enter the correct scheme (internal vs Internet-facing). 
+- Create a listener group with the appropriate name
+- Group size - set the desired, minimum and maximum capacity:
+```
+Desired capacity - Desired number of instances
+Minimum capacity - Minimum number of instances 
+Maximum capacity - Max number of instances.
+```
+Create your ASG and depending on the number of AZ you have (in my case three), you'll see those number of instances in your dashboard. 
