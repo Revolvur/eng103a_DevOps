@@ -41,10 +41,10 @@
     + [Creating an AMI](#creating-an-ami)
     + [Launching instance from AMI](#launching-instance-from-ami)
 
+![DevOps](https://dt-cdn.net/wp-content/uploads/2021/07/13429_ILL_DevOpsLoop.png)
 
-# What is DevOps
-## Why DevOps
-### Benefits of DevOps
+
+# Benefits of DevOps
 
 **Four pillars of DevOps best practice**
 - Ease of Use
