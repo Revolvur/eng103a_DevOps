@@ -58,9 +58,22 @@ Infrastructure that is described by code can thus be tracked, validated, and rec
 Pipeline to keep track of everything
 
 
-- Flexibility (product owner can add changes)
-- Robustness - faster delivery of product
-- Cost - cost effective (automating process)
+- Flexibility 
+
+Product owner can add changes
+
+Various tools can be used to approach different problems
+
+- Robustness
+ 
+Faster delivery of product
+
+Documentation
+
+Transparent communication channels
+- Cost
+
+Cost effective (automating process)
 
 As DevOps engineers we need to learn how to understand code and not necessarily write it.
 
